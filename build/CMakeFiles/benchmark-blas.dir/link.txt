@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -fopenmp CMakeFiles/benchmark-blas.dir/dgemm-blas.cpp.o CMakeFiles/benchmark.dir/benchmark.cpp.o -o benchmark-blas  -Wl,-rpath,/usr/local/lib /usr/lib/x86_64-linux-gnu/libopenblas.so /usr/local/lib/liblikwid.so 
