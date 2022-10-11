@@ -40,6 +40,7 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
               //prod[i][j] += A[k][j] + B[i][k]
                 //Block multiply
                 //info src: https://netlib.org/utk/papers/autoblock/node2.html
+                #pragma omp parallel for
                 for (int i = ii; i < ii+block_size; i++){
                   for(int j = jj; j < jj+block_size; j++){
                     //C[i*n + j] = 0;
