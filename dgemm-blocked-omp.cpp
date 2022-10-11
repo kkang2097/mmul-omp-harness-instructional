@@ -23,7 +23,9 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
 
    #pragma omp parallel
     {
-      LIKWID_MARKER_START(MY_MARKER_REGION_NAME)
+      #ifdef LIKWID_PERFMON
+            LIKWID_MARKER_START(MY_MARKER_REGION_NAME);
+      #endif
 
       #pragma omp parallel for
          //Then add our triple for-loop
@@ -45,6 +47,9 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
                       C[i*n + j] = C[i*n + j] + A[k*n + j] * B[i*n + k];
                     }}}
              }}}
-      LIKWID_MARKER_STOP(MY_MARKER_REGION_NAME)
+        #ifdef LIKWID_PERFMON
+            LIKWID_MARKER_STOP(MY_MARKER_REGION_NAME);
+        #endif
     }
+
 }

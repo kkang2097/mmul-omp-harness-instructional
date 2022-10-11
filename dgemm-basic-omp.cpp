@@ -28,7 +28,10 @@ void square_dgemm(int n, double* A, double* B, double* C)
 
    #pragma omp parallel
     {
-      LIKWID_MARKER_START(MY_MARKER_REGION_NAME)
+      #ifdef LIKWID_PERFMON
+            LIKWID_MARKER_START(MY_MARKER_REGION_NAME);
+      #endif
+
       #pragma omp parallel for
       //Then add our triple for-loop
        for (int i = 0; i < n; i++){
@@ -44,7 +47,9 @@ void square_dgemm(int n, double* A, double* B, double* C)
            }
          }
        }
-       LIKWID_MARKER_STOP(MY_MARKER_REGION_NAME)
+       #ifdef LIKWID_PERFMON
+             LIKWID_MARKER_STOP(MY_MARKER_REGION_NAME);
+       #endif
     }
 
 }
