@@ -27,7 +27,7 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
             LIKWID_MARKER_START(MY_MARKER_REGION_NAME);
       #endif
 
-      #pragma omp parallel for
+
          //Then add our triple for-loop
          for (int ii = 0; ii < n; ii+= block_size){
            for(int jj = 0; jj < n; jj+= block_size){
@@ -40,11 +40,12 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
               //prod[i][j] += A[k][j] + B[i][k]
                 //Block multiply
                 //info src: https://netlib.org/utk/papers/autoblock/node2.html
-                #pragma omp parallel for
+                #pragma omp parallel for collapse(2)
                 for (int i = ii; i < ii+block_size; i++){
                   for(int j = jj; j < jj+block_size; j++){
                     //C[i*n + j] = 0;
                     for(int k = kk; k < kk+block_size; k++){
+                      #pragma omp critical
                       C[i*n + j] = C[i*n + j] + A[k*n + j] * B[i*n + k];
                     }}}
              }}}
