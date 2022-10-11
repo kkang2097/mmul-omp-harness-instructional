@@ -27,7 +27,7 @@ export PERF_COUNTER_GROUP=HBM_CACHE
 # perf counter data being collected only in the region of code surrounded by marker start/stop
 # calls. If MARKER_FLAG is not defined, then the LIKWID marker API will not be activated,
 # and the resulting performance data reflects the run of the entire program
-export MARKER_FLAG="-m"
+export MARKER_FLAG="-DLIKWID_PERFMON"
 
 # iterate over some number of threads. You will need to modify this for HW4 to reflect
 # the levels of concurrency in the assignment
