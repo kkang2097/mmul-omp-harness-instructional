@@ -29,6 +29,7 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
 
 
          //Then add our triple for-loop
+         #pragma omp parallel for
          for (int ii = 0; ii < n; ii+= block_size){
            for(int jj = 0; jj < n; jj+= block_size){
              //C[i*n + j] = 0;
@@ -40,7 +41,6 @@ void square_dgemm_blocked(int n, int block_size, double* A, double* B, double* C
               //prod[i][j] += A[k][j] + B[i][k]
                 //Block multiply
                 //info src: https://netlib.org/utk/papers/autoblock/node2.html
-                #pragma omp parallel for collapse(2)
                 for (int i = ii; i < ii+block_size; i++){
                   for(int j = jj; j < jj+block_size; j++){
                     //C[i*n + j] = 0;
